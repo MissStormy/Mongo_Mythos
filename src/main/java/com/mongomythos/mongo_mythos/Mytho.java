@@ -49,4 +49,9 @@ public class Mytho {
     public void setOrigen(String origen) {
         this.origen = origen;
     }
+
+    @Override
+    public String toString() {
+        return "Mytho{" + nombre + genero + tipo + origen + '}';
+    }
 }
