@@ -6,12 +6,19 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="753.0" styleClass="anchor-bg" stylesheets="@../../../CSS/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mongomythos.mongo_mythos.AppCtrl">
    <children>
-      <Button fx:id="NewDataBtn" layoutX="29.0" layoutY="195.0" mnemonicParsing="false" onAction="#OnClickNewData" text="Introducir datos" />
-      <Button fx:id="ListBtn" layoutX="29.0" layoutY="289.0" mnemonicParsing="false" onAction="#OnClickList" prefHeight="25.0" prefWidth="112.0" text="Lista" />
+      <Button fx:id="NewDataBtn" layoutX="29.0" layoutY="195.0" mnemonicParsing="false" onAction="#OnClickNewData" text="Introducir datos">
+         <effect>
+            <DropShadow />
+         </effect></Button>
+      <Button fx:id="ListBtn" layoutX="29.0" layoutY="289.0" mnemonicParsing="false" onAction="#OnClickList" prefHeight="25.0" prefWidth="112.0" text="Lista">
+         <effect>
+            <DropShadow />
+         </effect></Button>
       <AnchorPane fx:id="SaveDataPane" layoutX="168.0" layoutY="31.0" prefHeight="446.0" prefWidth="560.0" styleClass="anchor-data">
          <children>
             <Label layoutX="119.0" layoutY="24.0" styleClass="title-label" text="Introduce los datos de un nuevo mito" />
@@ -29,10 +36,24 @@
                 <TableColumn fx:id="TipoTbc" prefWidth="126.0" text="Tipos" />
               </columns>
             </TableView>
-            <Button fx:id="SaveBtn" layoutX="173.0" layoutY="327.0" mnemonicParsing="false" onAction="#OnClickSave" prefHeight="24.0" prefWidth="71.0" text="Guardar" />
-            <Button fx:id="CleanBtn" layoutX="173.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnClickClean" prefHeight="24.0" prefWidth="71.0" text="Limpiar" />
-            <Button fx:id="ModifyBtn" layoutX="63.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnClickModify" text="Modificar" />
-            <Button fx:id="NewBtn" layoutX="63.0" layoutY="327.0" mnemonicParsing="false" onAction="#OnClickNew" prefHeight="24.0" prefWidth="71.0" text="Nuevo" />
+            <Button fx:id="SaveBtn" layoutX="173.0" layoutY="327.0" mnemonicParsing="false" onAction="#OnClickSave" prefHeight="24.0" prefWidth="71.0" text="Guardar">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button fx:id="CleanBtn" layoutX="173.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnClickClean" prefHeight="24.0" prefWidth="71.0" text="Limpiar">
+               <effect>
+                  <DropShadow />
+               </effect></Button>
+            <Button fx:id="ModifyBtn" layoutX="63.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnClickModify" text="Modificar">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+            <Button fx:id="NewBtn" layoutX="63.0" layoutY="327.0" mnemonicParsing="false" onAction="#OnClickNew" prefHeight="24.0" prefWidth="71.0" text="Nuevo">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ListPane" layoutX="168.0" layoutY="31.0" prefHeight="446.0" prefWidth="560.0" styleClass="anchor-data" visible="false">
