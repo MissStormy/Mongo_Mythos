@@ -1,0 +1,18 @@
+.anchor-bg{
+    -fx-background-color: #49386c;
+    -fx-font-family: "Bookman Old Style";
+}
+.anchor-data{
+    -fx-background-color: #937fbc;
+    -fx-background-radius: 5px;
+}
+.title-label{
+    -fx-font-size: 20px;
+}
+.button{
+    -fx-background-color: #bd8bc0;
+    -fx-text-fill: white;
+}
+.button:hover{
+    -fx-background-color: transparent;
+}
