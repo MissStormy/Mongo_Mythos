@@ -1,5 +1,6 @@
 package com.mongomythos.mongo_mythos.domain;
 
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 
 public class Mytho {

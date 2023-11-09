@@ -11,11 +11,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.mongodb.client.model.Filters.eq;
+
 public class MythoDAO {
     //private MongoClient mongoClient;
     private MongoClient con;
     private MongoDatabase db;
     private static final String DATABASE_NAME = "cthulhu";
+    private static final String COLLECTION_NAME = "mythos";
 
 
 
@@ -33,13 +36,12 @@ public class MythoDAO {
                 .append("origen", mytho.getOrigen());
         db.getCollection(DATABASE_NAME).insertOne(documento);
 
-        //MongoCollection<Coche> collection = db.getCollection("coches", Coche.class);
-        //collection.insertOne(coche);
+
     }
 
     public void eliminarMytho(Mytho mytho) throws SQLException {
-        MongoDatabase db = con.getDatabase("cthulhu");
-        
+        //Document documento = (Document) db.getCollection(COLLECTION_NAME).find(eq(mytho));
+
     }
 
     public void modificarMytho(Mytho mythoAntiguo, Mytho mythoNuevo) throws SQLException {
