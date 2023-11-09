@@ -9,7 +9,7 @@
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="753.0" styleClass="anchor-bg" stylesheets="@../../../CSS/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mongomythos.mongo_mythos.AppCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="753.0" styleClass="anchor-bg" stylesheets="@../../../CSS/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mongomythos.mongo_mythos.controllers.AppCtrl">
    <children>
       <Button fx:id="NewDataBtn" layoutX="29.0" layoutY="195.0" mnemonicParsing="false" onAction="#OnClickNewData" text="Introducir datos">
          <effect>

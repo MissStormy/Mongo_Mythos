@@ -1,18 +1,22 @@
-package com.mongomythos.mongo_mythos;
+package com.mongomythos.mongo_mythos.controllers;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongomythos.mongo_mythos.domain.Mytho;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.bson.Document;
 
+import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AppCtrl implements Initializable {
@@ -45,11 +49,11 @@ public class AppCtrl implements Initializable {
     //Combobox
     @FXML
     private ComboBox<String> GeneroCmb;
-    ObservableList<String> generos = FXCollections.observableArrayList("Masculino", "Femenino", "Otro");
+    //ObservableList<String> generos = FXCollections.observableArrayList("Masculino", "Femenino", "Otro");
 
     @FXML
     private ComboBox<String> TipoCmb;
-    ObservableList<String> tipos = FXCollections.observableArrayList("Primigenio", "Dios Exterior", "Monstruo");
+    //ObservableList<String> tipos = FXCollections.observableArrayList("Primigenio", "Dios Exterior", "Monstruo");
 
     //Tableviews
     @FXML
@@ -60,13 +64,16 @@ public class AppCtrl implements Initializable {
 
     //Tablecolumns
     @FXML
+    private TableColumn<?, ?> NombreTbc;
+
+    @FXML
+    private TableColumn<?, ?> TipoTbc;
+
+    @FXML
     private TableColumn<?, ?> GeneroFullTbc;
 
     @FXML
     private TableColumn<?, ?> NombreFullTbc;
-
-    @FXML
-    private TableColumn<?, ?> NombreTbc;
 
     @FXML
     private TableColumn<?, ?> OrigenFullTbc;
@@ -74,8 +81,6 @@ public class AppCtrl implements Initializable {
     @FXML
     private TableColumn<?, ?> TipoFullTbc;
 
-    @FXML
-    private TableColumn<?, ?> TipoTbc;
 
     //Textfields
     @FXML
@@ -84,20 +89,51 @@ public class AppCtrl implements Initializable {
     @FXML
     private TextField OrigenTxt;
 
+    private MythoDAO mythoDAO;
+    private Mytho mythoSelec;
+    MongoClient con;
 
 
     //Con esto cargamos todo desde el inicio
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //Variable necesaria con Mongo para hacer la conexion
-        MongoClient con;
-        con = ConnectionDB.conectar();
-        MongoDatabase database = con.getDatabase("cthulhu");
-        //Me devuelve una coleccion si no existe la crea
-        MongoCollection<Document> collection = database.getCollection("mythos");
-        //System.out.println("Tamaño de la coleccion" + collection.count());
+        mythoDAO = new MythoDAO();
+        cargarDatos();
+        poblarTablas();
     }
 
+    private void cargarDatos(){
+        MythoTbv.getItems().clear();
+        List<Mytho> mythos = mythoDAO.obtenerMythos();
+
+        MythoTbv.setItems(FXCollections.observableArrayList(mythos));
+
+        String[] generos = new String[]{"Masculino", "Femenino", "Otro"};
+        GeneroCmb.setItems(FXCollections.observableArrayList(generos));
+
+        String[] tipos = new String[]{"Primigenio", "Dios exterior", "Monstruos"};
+        TipoCmb.setItems(FXCollections.observableArrayList(tipos));
+    }
+
+    private void poblarTablas(){
+
+        Field[] fields = Mytho.class.getDeclaredFields();
+        for (Field field : fields){
+            if (field.getName().equals("id")){
+                continue;
+            }
+
+            TableColumn<Mytho, String> column = new TableColumn<>("[" + field.getName() + "]");
+            column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
+            //Poblar tabla basica
+            MythoTbv.getColumns().add(column);
+            //Poblar tabla extendida
+            MythosFullTbv.getColumns().add(column);
+        }
+        MythoTbv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        MythosFullTbv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+    }
     //Con esto limpiamos los textfield
     @FXML
     void OnClickClean(ActionEvent event) {
@@ -115,7 +151,7 @@ public class AppCtrl implements Initializable {
     void OnClickModify(ActionEvent event) {
 
     }
-    Mytho mythoSelec;
+
     void MythoSeleccionado(){
         mythoSelec = MythoTbv.getSelectionModel().getSelectedItem();
         System.out.println(mythoSelec);

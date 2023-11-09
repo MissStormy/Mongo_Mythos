@@ -1,0 +1,22 @@
+db.mythos.insertMany(
+[
+  {
+    "nombre" : "Cthulhu",
+    "genero" : "Masculino",
+    "tipo" : "Primigenio",
+    "origen" : "Vhoorl"
+  },
+  {
+    "nombre" : "Nyarlathotep",
+    "genero" : "Otro",
+    "tipo" : "Dios exterior",
+    "origen" : "Corte de Nyarlathotep"
+  },
+  {
+    "nombre" : "Shub-Niggurath",
+    "genero" : "Femenino",
+    "tipo" : "Primigenio",
+    "origen" : "Bosque"
+  }
+]
+)

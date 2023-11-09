@@ -1,7 +1,10 @@
-package com.mongomythos.mongo_mythos;
+package com.mongomythos.mongo_mythos.domain;
+
+import org.bson.types.ObjectId;
 
 public class Mytho {
     //Variables
+    private ObjectId id;
     private String nombre;
     private String genero;
     private String tipo;
@@ -11,13 +14,21 @@ public class Mytho {
 
     }
 
-    public Mytho(String nombre, String genero, String tipo, String origen) {
+    public Mytho(ObjectId id, String nombre, String genero, String tipo, String origen) {
+        this.id = id;
         this.nombre = nombre;
         this.genero = genero;
         this.tipo = tipo;
         this.origen = origen;
     }
     //Getter y setters
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
     public String getNombre() {
         return nombre;
     }
