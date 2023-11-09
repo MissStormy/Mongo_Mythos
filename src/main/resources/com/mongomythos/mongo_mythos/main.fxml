@@ -7,6 +7,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="753.0" styleClass="anchor-bg" stylesheets="@../../../CSS/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mongomythos.mongo_mythos.controllers.AppCtrl">
@@ -26,8 +27,14 @@
             <Label layoutX="29.0" layoutY="157.0" text="Genero" />
             <Label layoutX="29.0" layoutY="209.0" text="Tipo" />
             <Label layoutX="29.0" layoutY="256.0" text="Origen" />
-            <TextField fx:id="NombreTxt" layoutX="98.0" layoutY="104.0" />
-            <TextField fx:id="OrigenTxt" layoutX="98.0" layoutY="252.0" />
+            <TextField fx:id="NombreTxt" layoutX="98.0" layoutY="104.0">
+               <effect>
+                  <InnerShadow />
+               </effect></TextField>
+            <TextField fx:id="OrigenTxt" layoutX="98.0" layoutY="252.0">
+               <effect>
+                  <InnerShadow />
+               </effect></TextField>
             <ComboBox fx:id="GeneroCmb" layoutX="98.0" layoutY="153.0" prefWidth="150.0" />
             <ComboBox fx:id="TipoCmb" layoutX="98.0" layoutY="205.0" prefWidth="150.0" />
             <TableView fx:id="MythoTbv" layoutX="285.0" layoutY="105.0" prefHeight="320.0" prefWidth="252.0">
@@ -35,6 +42,9 @@
                 <TableColumn fx:id="NombreTbc" prefWidth="125.0" text="Nombre" />
                 <TableColumn fx:id="TipoTbc" prefWidth="126.0" text="Tipos" />
               </columns>
+               <effect>
+                  <DropShadow />
+               </effect>
             </TableView>
             <Button fx:id="SaveBtn" layoutX="173.0" layoutY="327.0" mnemonicParsing="false" onAction="#OnClickSave" prefHeight="24.0" prefWidth="71.0" text="Guardar">
                <effect>
@@ -44,17 +54,25 @@
                <effect>
                   <DropShadow />
                </effect></Button>
-            <Button fx:id="ModifyBtn" layoutX="63.0" layoutY="376.0" mnemonicParsing="false" onAction="#OnClickModify" text="Modificar">
+            <Button fx:id="ModifyBtn" layoutX="63.0" layoutY="351.0" mnemonicParsing="false" onAction="#OnClickModify" text="Modificar">
                <effect>
                   <DropShadow />
                </effect>
             </Button>
-            <Button fx:id="NewBtn" layoutX="63.0" layoutY="327.0" mnemonicParsing="false" onAction="#OnClickNew" prefHeight="24.0" prefWidth="71.0" text="Nuevo">
+            <Button fx:id="NewBtn" layoutX="63.0" layoutY="303.0" mnemonicParsing="false" onAction="#OnClickNew" prefHeight="24.0" prefWidth="71.0" text="Nuevo">
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+            <Button fx:id="BorrarBtn" layoutX="63.0" layoutY="400.0" mnemonicParsing="false" onAction="#OnClickBorrar" prefHeight="25.0" prefWidth="71.0" text="Borrar">
                <effect>
                   <DropShadow />
                </effect>
             </Button>
          </children>
+         <effect>
+            <DropShadow />
+         </effect>
       </AnchorPane>
       <AnchorPane fx:id="ListPane" layoutX="168.0" layoutY="31.0" prefHeight="446.0" prefWidth="560.0" styleClass="anchor-data" visible="false">
          <children>

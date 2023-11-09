@@ -25,24 +25,21 @@ public class MythoDAO {
         db= con.getDatabase("cthulhu");
 
     }
-
-
-
-
     public void guardarMytho(Mytho mytho) {
-//        Document documento = new Document()
-//                .append("marca", coche.getMarca())
-//                .append("modelo", coche.getModelo())
-//                .append("matricula", coche.getMatricula())
-//                .append("tipo", coche.getTipo());
-//        db.getCollection(DATABASE_NAME).insertOne(documento);
+        Document documento = new Document()
+                .append("nombre", mytho.getNombre())
+                .append("genero", mytho.getGenero())
+                .append("tipo", mytho.getTipo())
+                .append("origen", mytho.getOrigen());
+        db.getCollection(DATABASE_NAME).insertOne(documento);
 
         //MongoCollection<Coche> collection = db.getCollection("coches", Coche.class);
         //collection.insertOne(coche);
     }
 
     public void eliminarMytho(Mytho mytho) throws SQLException {
-
+        MongoDatabase db = con.getDatabase("cthulhu");
+        
     }
 
     public void modificarMytho(Mytho mythoAntiguo, Mytho mythoNuevo) throws SQLException {
@@ -50,24 +47,24 @@ public class MythoDAO {
     }
 
     public List<Mytho> obtenerMythos() {
-        this.conectarse();
+        //this.conectarse();
         List<Mytho> mythos = new ArrayList<>();
         Document documento = new Document();
 
 
-        FindIterable findIterable = db.getCollection("coche").find(documento);
+        FindIterable findIterable = db.getCollection("mythos").find(documento);
 
 
         Iterator<Document> iter = findIterable.iterator();
         while (iter.hasNext()) {
+            //System.out.println("hola");
             Document doc = iter.next();
             Mytho mytho = new Mytho();
             mytho.setId(doc.getObjectId("_id"));
             mytho.setNombre(doc.getString("nombre"));
-            mytho.setGenero(doc.getString("modelo"));
-            mytho.setTipo(doc.getString("marca"));
-            mytho.setOrigen(doc.getString("matricula"));
+            mytho.setGenero(doc.getString("genero"));
             mytho.setTipo(doc.getString("tipo"));
+            mytho.setOrigen(doc.getString("origen"));
             mythos.add(mytho);
         }
 

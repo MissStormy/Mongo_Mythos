@@ -3,6 +3,8 @@ package com.mongomythos.mongo_mythos.controllers;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.DeleteResult;
 import com.mongomythos.mongo_mythos.domain.Mytho;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,9 +15,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -28,6 +32,9 @@ public class AppCtrl implements Initializable {
     private AnchorPane SaveDataPane;
 
     //Botones
+    @FXML
+    private Button BorrarBtn;
+
     @FXML
     private Button CleanBtn;
 
@@ -90,7 +97,7 @@ public class AppCtrl implements Initializable {
     private TextField OrigenTxt;
 
     private MythoDAO mythoDAO = new MythoDAO();
-    
+
     private Mytho mythoSelec;
     MongoClient con;
 
@@ -105,10 +112,8 @@ public class AppCtrl implements Initializable {
     }
 
     private void cargarDatos(){
-        MythoTbv.getItems().clear();
-        List<Mytho> mythos = mythoDAO.obtenerMythos();
 
-        MythoTbv.setItems(FXCollections.observableArrayList(mythos));
+
 
         //String[] generos = new String[]{"Masculino", "Femenino", "Otro"};
         GeneroCmb.setItems(FXCollections.observableArrayList(generos));
@@ -120,20 +125,24 @@ public class AppCtrl implements Initializable {
     }
 
     private void poblarTablas(){
-
+        MythoTbv.getItems().clear();
         List<Mytho> mythos = mythoDAO.obtenerMythos();
+        //System.out.println(mythos);
         for(Mytho e : mythos){
             System.out.println(e);
         }
-        MythoTbv.setItems(FXCollections.observableArrayList(mythos).sorted());
-        MythosFullTbv.setItems(FXCollections.observableArrayList(mythos).sorted());
+        MythoTbv.setItems(FXCollections.observableArrayList(mythos));
+        MythosFullTbv.setItems(FXCollections.observableArrayList(mythos));
 
         //Tabla pequeña
-        this.NombreTbc.setCellValueFactory(new PropertyValueFactory("nombre"));
-        this.TipoTbc.setCellValueFactory(new PropertyValueFactory("tipo"));
+        NombreTbc.setCellValueFactory(new PropertyValueFactory("nombre"));
+        TipoTbc.setCellValueFactory(new PropertyValueFactory("tipo"));
 
         //Tabla extendida
-        this.NombreFullTbc.setCellValueFactory(new PropertyValueFactory("nombre"));
+        NombreFullTbc.setCellValueFactory(new PropertyValueFactory("nombre"));
+        GeneroFullTbc.setCellValueFactory(new PropertyValueFactory("genero"));
+        TipoFullTbc.setCellValueFactory(new PropertyValueFactory("tipo"));
+        OrigenFullTbc.setCellValueFactory(new PropertyValueFactory("origen"));
 
     }
     //Con esto limpiamos los textfield
@@ -172,6 +181,13 @@ public class AppCtrl implements Initializable {
     //Boton para guardar los datos
     @FXML
     void OnClickSave(ActionEvent event) {
+
+    }
+    @FXML
+    void OnClickBorrar(ActionEvent event) throws SQLException {
+        /**/
+        Mytho mytho = MythoTbv.getSelectionModel().getSelectedItem();
+        mythoDAO.eliminarMytho(mytho);
 
     }
 
