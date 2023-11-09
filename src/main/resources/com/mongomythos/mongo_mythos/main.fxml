@@ -10,7 +10,7 @@
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="753.0" styleClass="anchor-bg" stylesheets="@../../../CSS/style.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mongomythos.mongo_mythos.controllers.AppCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="753.0" styleClass="anchor-bg" stylesheets="@../../../CSS/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mongomythos.mongo_mythos.controllers.AppCtrl">
    <children>
       <Button fx:id="NewDataBtn" layoutX="29.0" layoutY="195.0" mnemonicParsing="false" onAction="#OnClickNewData" text="Introducir datos">
          <effect>
@@ -27,11 +27,11 @@
             <Label layoutX="29.0" layoutY="157.0" text="Genero" />
             <Label layoutX="29.0" layoutY="209.0" text="Tipo" />
             <Label layoutX="29.0" layoutY="256.0" text="Origen" />
-            <TextField fx:id="NombreTxt" layoutX="98.0" layoutY="104.0">
+            <TextField fx:id="NombreTxt" editable="false" layoutX="98.0" layoutY="104.0">
                <effect>
                   <InnerShadow />
                </effect></TextField>
-            <TextField fx:id="OrigenTxt" layoutX="98.0" layoutY="252.0">
+            <TextField fx:id="OrigenTxt" editable="false" layoutX="98.0" layoutY="252.0">
                <effect>
                   <InnerShadow />
                </effect></TextField>

@@ -34,18 +34,23 @@ public class MythoDAO {
                 .append("genero", mytho.getGenero())
                 .append("tipo", mytho.getTipo())
                 .append("origen", mytho.getOrigen());
-        db.getCollection(DATABASE_NAME).insertOne(documento);
+        db.getCollection(COLLECTION_NAME).insertOne(documento);
 
 
     }
 
-    public void eliminarMytho(Mytho mytho) throws SQLException {
-        //Document documento = (Document) db.getCollection(COLLECTION_NAME).find(eq(mytho));
+    public void eliminarMytho(Mytho mytho) {
+       db.getCollection(COLLECTION_NAME).deleteOne(new Document("nombre", mytho.getNombre()));
 
     }
 
-    public void modificarMytho(Mytho mythoAntiguo, Mytho mythoNuevo) throws SQLException {
-
+    public void modificarMytho(Mytho mythoAntiguo, Mytho mythoNuevo) {
+        db.getCollection(COLLECTION_NAME).replaceOne(new Document("_id", mythoAntiguo.getId()),
+                new Document()
+                .append("nombre", mythoNuevo.getNombre())
+                .append("genero", mythoNuevo.getGenero())
+                .append("tipo", mythoNuevo.getTipo())
+                .append("origen", mythoNuevo.getOrigen()));
     }
 
     public List<Mytho> obtenerMythos() {

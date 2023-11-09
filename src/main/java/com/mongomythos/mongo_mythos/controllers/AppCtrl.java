@@ -6,6 +6,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 import com.mongomythos.mongo_mythos.domain.Mytho;
+import com.mongomythos.mongo_mythos.util.AlertUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -112,9 +113,6 @@ public class AppCtrl implements Initializable {
     }
 
     private void cargarDatos(){
-
-
-
         //String[] generos = new String[]{"Masculino", "Femenino", "Otro"};
         GeneroCmb.setItems(FXCollections.observableArrayList(generos));
         GeneroCmb.getSelectionModel().selectFirst();
@@ -160,17 +158,33 @@ public class AppCtrl implements Initializable {
     //Este activa los textfield y el tableview para elegir un mito a modificar
     @FXML
     void OnClickModify(ActionEvent event) {
+        mythoSelec = MythoTbv.getSelectionModel().getSelectedItem();
+        MythoSeleccionado(mythoSelec);
+
+        editableView();
+        ModifyBtn.setDisable(true);
+        NewBtn.setDisable(false);
 
     }
 
-    void MythoSeleccionado(){
-        mythoSelec = MythoTbv.getSelectionModel().getSelectedItem();
-        System.out.println(mythoSelec);
+    void MythoSeleccionado(Mytho mythoSelec){
+        NombreTxt.setText(mythoSelec.getNombre());
+        GeneroCmb.setValue(mythoSelec.getGenero());
+        TipoCmb.setValue(mythoSelec.getTipo());
+        OrigenTxt.setText(mythoSelec.getOrigen());
     }
     //Este boton activara los textfield para introducir un nuevo mito
     @FXML
     void OnClickNew(ActionEvent event) {
-
+        editableView();
+        ModifyBtn.setDisable(false);
+        NewBtn.setDisable(true);
+    }
+    void editableView(){
+        NombreTxt.setEditable(true);
+        GeneroCmb.setEditable(true);
+        TipoCmb.setEditable(true);
+        OrigenTxt.setEditable(true);
     }
     //Boton lateral para cambiar de vista
     @FXML
@@ -182,13 +196,64 @@ public class AppCtrl implements Initializable {
     @FXML
     void OnClickSave(ActionEvent event) {
 
+        if (ModifyBtn.isDisable()){
+            String nombre = NombreTxt.getText();
+            boolean check = verify(nombre);
+            if(check == false){
+                AlertUtils.mostrarError("Eh!! Que te falta llenar esto");
+            }else{
+
+                String genero = GeneroCmb.getSelectionModel().getSelectedItem();
+                String tipo = TipoCmb.getSelectionModel().getSelectedItem();
+                String origen = OrigenTxt.getText();
+
+                Mytho mytho = new Mytho(nombre, genero, tipo, origen);
+                mythoDAO.modificarMytho(mythoSelec, mytho);
+
+                reloadTable();
+                //System.out.println("Modify esta desactivado!!");
+            }
+
+        }
+        if(NewBtn.isDisable()){
+            String nombre = NombreTxt.getText();
+            boolean check = verify(nombre);
+            if(check == false){
+                AlertUtils.mostrarError("Eh!! Que te falta llenar esto");
+            }else {
+
+                String genero = GeneroCmb.getSelectionModel().getSelectedItem();
+                String tipo = TipoCmb.getSelectionModel().getSelectedItem();
+                String origen = OrigenTxt.getText();
+
+                Mytho mytho = new Mytho(nombre, genero, tipo, origen);
+                System.out.println(mytho.toString());
+                mythoDAO.guardarMytho(mytho);
+
+                reloadTable();
+                //System.out.println("New esta desactivado!!");
+            }
+        }
     }
     @FXML
     void OnClickBorrar(ActionEvent event) throws SQLException {
-        /**/
+
         Mytho mytho = MythoTbv.getSelectionModel().getSelectedItem();
         mythoDAO.eliminarMytho(mytho);
+        reloadTable();
+    }
 
+    void reloadTable(){
+        poblarTablas();
+    }
+    boolean verify(String nombre){
+        boolean correcto = false;
+        if(nombre.equals("")){
+            correcto = false;
+        }else {
+            correcto = true;
+        }
+        return correcto;
     }
 
 
