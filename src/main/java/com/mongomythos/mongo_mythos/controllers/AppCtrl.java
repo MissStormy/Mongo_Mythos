@@ -49,11 +49,11 @@ public class AppCtrl implements Initializable {
     //Combobox
     @FXML
     private ComboBox<String> GeneroCmb;
-    //ObservableList<String> generos = FXCollections.observableArrayList("Masculino", "Femenino", "Otro");
+    ObservableList<String> generos = FXCollections.observableArrayList("Masculino", "Femenino", "Otro");
 
     @FXML
     private ComboBox<String> TipoCmb;
-    //ObservableList<String> tipos = FXCollections.observableArrayList("Primigenio", "Dios Exterior", "Monstruo");
+    ObservableList<String> tipos = FXCollections.observableArrayList("Primigenio", "Dios Exterior", "Monstruo");
 
     //Tableviews
     @FXML
@@ -89,7 +89,8 @@ public class AppCtrl implements Initializable {
     @FXML
     private TextField OrigenTxt;
 
-    private MythoDAO mythoDAO;
+    private MythoDAO mythoDAO = new MythoDAO();
+    
     private Mytho mythoSelec;
     MongoClient con;
 
@@ -97,7 +98,8 @@ public class AppCtrl implements Initializable {
     //Con esto cargamos todo desde el inicio
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        mythoDAO = new MythoDAO();
+
+        mythoDAO.conectarse();
         cargarDatos();
         poblarTablas();
     }
@@ -108,30 +110,30 @@ public class AppCtrl implements Initializable {
 
         MythoTbv.setItems(FXCollections.observableArrayList(mythos));
 
-        String[] generos = new String[]{"Masculino", "Femenino", "Otro"};
+        //String[] generos = new String[]{"Masculino", "Femenino", "Otro"};
         GeneroCmb.setItems(FXCollections.observableArrayList(generos));
+        GeneroCmb.getSelectionModel().selectFirst();
 
-        String[] tipos = new String[]{"Primigenio", "Dios exterior", "Monstruos"};
+        //String[] tipos = new String[]{"Primigenio", "Dios exterior", "Monstruos"};
         TipoCmb.setItems(FXCollections.observableArrayList(tipos));
+        TipoCmb.getSelectionModel().selectFirst();
     }
 
     private void poblarTablas(){
 
-        Field[] fields = Mytho.class.getDeclaredFields();
-        for (Field field : fields){
-            if (field.getName().equals("id")){
-                continue;
-            }
-
-            TableColumn<Mytho, String> column = new TableColumn<>("[" + field.getName() + "]");
-            column.setCellValueFactory(new PropertyValueFactory<>(field.getName()));
-            //Poblar tabla basica
-            MythoTbv.getColumns().add(column);
-            //Poblar tabla extendida
-            MythosFullTbv.getColumns().add(column);
+        List<Mytho> mythos = mythoDAO.obtenerMythos();
+        for(Mytho e : mythos){
+            System.out.println(e);
         }
-        MythoTbv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        MythosFullTbv.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        MythoTbv.setItems(FXCollections.observableArrayList(mythos).sorted());
+        MythosFullTbv.setItems(FXCollections.observableArrayList(mythos).sorted());
+
+        //Tabla pequeña
+        this.NombreTbc.setCellValueFactory(new PropertyValueFactory("nombre"));
+        this.TipoTbc.setCellValueFactory(new PropertyValueFactory("tipo"));
+
+        //Tabla extendida
+        this.NombreFullTbc.setCellValueFactory(new PropertyValueFactory("nombre"));
 
     }
     //Con esto limpiamos los textfield
